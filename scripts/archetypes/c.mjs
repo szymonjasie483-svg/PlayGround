@@ -1,0 +1,56 @@
+import { P } from './base.mjs'
+
+// Budownictwo, drewno, tworzywa, szkło, śnieg.
+export const ARCHETYPES_C = {
+  binder: P({ state: 'powder', movement: 'fall', density: 1400, hardness: 2, melting: 1450, ph: 12, tags: ['cement', 'hydraulic', 'alkaline'], behavior: 'Wiąże wodę i twardnieje w kamień.', color: '#b8b2a4' }),
+  concrete: P({ density: 2400, hardness: 6, melting: 1500, ph: 12, tags: ['concrete', 'alkaline', 'stone'], behavior: 'Twarda masa; pęka pod rozciąganiem, chroni przed ogniem.', color: '#a8a49a' }),
+  plaster: P({ state: 'powder', movement: 'fall', density: 1200, hardness: 2, melting: 1200, ph: 8, tags: ['gypsum', 'binder'], behavior: 'Wiąże wodę i tworzy gładką powłokę.', color: '#e8e2d4' }),
+  board: P({ density: 800, hardness: 2, melting: 200, ignition: 280, flammable: 0.7, tags: ['composite', 'wood', 'flammable'], behavior: 'Płyta budowlana; chłonie wodę i pali się.', color: '#c8a878' }),
+  brick: P({ density: 1900, hardness: 5, melting: 1500, tags: ['ceramic', 'porous', 'stone'], behavior: 'Wypalona cegła; akumuluje ciepło.', color: '#b05a3a' }),
+  stone: P({ density: 2700, hardness: 6, melting: 1300, tags: ['stone', 'mineral'], behavior: 'Blok kamienny; ciężki i trwały.', color: '#9a958c' }),
+  asphalt: P({ density: 2300, hardness: 2, melting: 80, ignition: 400, flammable: 0.3, tags: ['asphalt', 'bitumen'], behavior: 'Lepka masa; mięknie w słońcu i pali się gęstym dymem.', color: '#3a3a3a' }),
+  aggregate: P({ state: 'powder', movement: 'fall', density: 1600, hardness: 6, melting: 1500, tags: ['granular', 'stone'], behavior: 'Kruszywo; sypie się i tworzy stabilne podsypki.', color: '#8a8478' }),
+  insulation: P({ density: 100, hardness: 1, melting: 900, ignition: 350, flammable: 0.3, tags: ['insulation', 'porous', 'thermal'], behavior: 'Uwięzia powietrze; izoluje ciepło i dźwięk.', color: '#e8d8b8', pattern: 'fiber' }),
+  roof: P({ density: 1800, hardness: 3, melting: 1200, tags: ['roof', 'waterproof'], behavior: 'Pokrycie dachowe; odprowadza wodę.', color: '#5a4a42' }),
+  tile: P({ density: 2300, hardness: 6, melting: 1400, tags: ['ceramic', 'tile', 'stone'], behavior: 'Twarda płytka; odporna na wodę i ścieranie.', color: '#d8d0c0' }),
+  sealant: P({ state: 'paste', movement: 'static', density: 1100, hardness: 1, melting: 150, ignition: 400, tags: ['sealant', 'polymer'], behavior: 'Elastyczna masa; uszczelnia szczeliny.', color: '#d8d8d8' }),
+  earth: P({ density: 1800, hardness: 2, melting: 1300, tags: ['earth', 'clay', 'stone'], behavior: 'Zbita ziemia; twardnieje po wyschnięciu.', color: '#9a7a52' }),
+
+  hardwood: P({ density: 750, hardness: 4, melting: 220, ignition: 300, flammable: 0.8, tags: ['wood', 'hardwood', 'flammable'], behavior: 'Gęste drewno; pali się długo i daje twardy węgiel.', color: '#8a5a32', pattern: 'ring' }),
+  hardwood2: P({ density: 850, hardness: 4.5, melting: 230, ignition: 310, flammable: 0.75, tags: ['wood', 'hardwood', 'flammable'], behavior: 'Ciężkie drewno; trudno się rąbie.', color: '#5a3a28', pattern: 'ring' }),
+  softwood: P({ density: 500, hardness: 2, melting: 200, ignition: 280, flammable: 0.9, tags: ['wood', 'softwood', 'flammable', 'resinous'], behavior: 'Lekkie drewno; pali się szybko z trzaskiem.', color: '#c89a62', pattern: 'ring' }),
+  wood: P({ density: 600, hardness: 2.5, melting: 210, ignition: 290, flammable: 0.85, tags: ['wood', 'organic', 'flammable'], behavior: 'Drewno; pęka, chłonie wodę i pali się.', color: '#b08050', pattern: 'ring' }),
+  wood2: P({ density: 550, hardness: 2, melting: 210, ignition: 280, flammable: 0.8, tags: ['wood', 'organic', 'flammable'], behavior: 'Drewno o nieregularnym usłojeniu; łatwo się łupie.', color: '#a89070', pattern: 'ring' }),
+  composite: P({ density: 700, hardness: 3, melting: 180, ignition: 260, flammable: 0.7, tags: ['composite', 'wood', 'flammable'], behavior: 'Materiał drewnopochodny; klejony i prasowany.', color: '#c0a070' }),
+  paper: P({ density: 700, hardness: 1, melting: 180, ignition: 230, flammable: 0.95, tags: ['paper', 'cellulose', 'flammable'], behavior: 'Cienki papier; pali się i chłonie wodę.', color: '#e8e0c8', pattern: 'fiber' }),
+  paper2: P({ density: 650, hardness: 1, melting: 180, ignition: 230, flammable: 0.95, tags: ['paper', 'cellulose', 'flammable'], behavior: 'Papier o innym splocie; miękki i chłonny.', color: '#f0e8d8', pattern: 'fiber' }),
+  special: P({ density: 750, hardness: 1, melting: 180, ignition: 240, flammable: 0.85, tags: ['paper', 'special', 'flammable'], behavior: 'Papier specjalny; powleczony lub barwiony.', color: '#d8c8a8', pattern: 'fiber' }),
+  pulp: P({ state: 'powder', movement: 'fall', density: 500, hardness: 1, melting: 170, ignition: 240, flammable: 0.8, tags: ['pulp', 'cellulose', 'flammable'], behavior: 'Wilgotna masa celulozowa; schnie i twardnieje.', color: '#d8c8a0' }),
+
+  polyolefin: P({ density: 950, hardness: 1.5, melting: 135, ignition: 350, flammable: 0.7, tags: ['plastic', 'polymer', 'flammable'], behavior: 'Woskowe tworzywo; mięknie i pali się jak świeca.', color: '#d8e8e0' }),
+  styrene: P({ density: 1050, hardness: 1, melting: 110, ignition: 340, flammable: 0.8, tags: ['plastic', 'polymer', 'flammable'], behavior: 'Sztywne lub spienione; pęka i pali się sadzą.', color: '#e8e8f0' }),
+  vinyl: P({ density: 1400, hardness: 2, melting: 180, ignition: 400, flammable: 0.45, tags: ['plastic', 'polymer', 'chlorinated'], behavior: 'Twarde lub elastyczne; dymi chlorowodorem.', color: '#c8d8c0' }),
+  engineering: P({ density: 1200, hardness: 3, melting: 220, ignition: 380, flammable: 0.5, tags: ['plastic', 'polymer', 'engineering'], behavior: 'Wytrzymałe tworzywo techniczne; odporne na uderzenia.', color: '#b8c8d8' }),
+  high_perf: P({ density: 1300, hardness: 3.5, melting: 340, ignition: 500, flammable: 0.3, tags: ['plastic', 'polymer', 'heat_resistant'], behavior: 'Zaawansowany polimer; pracuje w wysokiej temperaturze.', color: '#d8c8a8' }),
+  fluoropolymer: P({ density: 2200, hardness: 2, melting: 320, ignition: null, tags: ['plastic', 'polymer', 'inert', 'nonstick'], behavior: 'Bardzo obojętny i śliski; odporny na kwasy.', color: '#f0f0e8' }),
+  elastomer: P({ density: 1100, hardness: 1, melting: 120, ignition: 350, flammable: 0.5, tags: ['rubber', 'elastomer', 'flexible'], behavior: 'Rozciągliwy; wraca do kształtu po odkształceniu.', color: '#5a5a5a' }),
+  resin: P({ density: 1200, hardness: 2.5, melting: 100, ignition: 350, flammable: 0.6, tags: ['resin', 'polymer', 'thermoset'], behavior: 'Utwardza się nieodwracalnie; klei i uszczelnia.', color: '#d8b878' }),
+  bio: P({ density: 1250, hardness: 2, melting: 160, ignition: 320, flammable: 0.5, tags: ['plastic', 'biodegradable', 'polymer'], behavior: 'Biodegradowalne tworzywo; rozkłada się w kompoście.', color: '#c8d8a8' }),
+  other: P({ density: 1000, hardness: 2, melting: 150, ignition: 350, flammable: 0.6, tags: ['polymer', 'synthetic'], behavior: 'Materiał polimerowy o specjalnym zastosowaniu.', color: '#d0d0d8' }),
+
+  glass: P({ density: 2500, hardness: 6, melting: 1400, conductivity: 0.001, tags: ['glass', 'brittle', 'transparent'], behavior: 'Twarde i kruche; pęka, nie przewodzi prądu.', color: '#a8d8e8', pattern: 'crystal' }),
+  glass2: P({ density: 2500, hardness: 6, melting: 1400, tags: ['glass', 'brittle'], behavior: 'Szkło o zmodyfikowanej powierzchni lub barwie.', color: '#b8e0f0', pattern: 'crystal' }),
+  ceramic: P({ density: 2600, hardness: 7, melting: 1600, tags: ['ceramic', 'brittle', 'heat_resistant'], behavior: 'Twarda ceramika; odporna na ciepło, krucha na uderzenia.', color: '#d8d0c0' }),
+  ceramic2: P({ density: 2500, hardness: 6.5, melting: 1550, tags: ['ceramic', 'glazed', 'brittle'], behavior: 'Ceramika zdobiona; glazura chroni powierzchnię.', color: '#c8b8a8' }),
+  technical: P({ density: 3200, hardness: 9, melting: 2200, tags: ['ceramic', 'technical', 'hard'], behavior: 'Ceramika techniczna; bardzo twarda i żaroodporna.', color: '#7a8288' }),
+  functional: P({ density: 3000, hardness: 7, melting: 1800, conductivity: 0.01, tags: ['ceramic', 'functional', 'magnetic'], behavior: 'Ceramika funkcjonalna; reaguje na pole lub prąd.', color: '#8a8a9a' }),
+  finish: P({ state: 'powder', movement: 'fall', density: 2400, hardness: 5, melting: 900, tags: ['glaze', 'ceramic', 'pigment'], behavior: 'Szklista powłoka; topi się w piecu.', color: '#b8c8d8' }),
+  lab: P({ density: 2300, hardness: 6, melting: 1600, tags: ['glass', 'lab', 'heat_resistant'], behavior: 'Szkło laboratoryjne; odporne na kwasy i ciepło.', color: '#d0e8f0' }),
+  other: P({ density: 2500, hardness: 6, melting: 1500, tags: ['glass', 'ceramic'], behavior: 'Materiał szklano-ceramiczny o specjalnym zastosowaniu.', color: '#c8e0e8' }),
+
+  snow: P({ state: 'powder', movement: 'fall', density: 300, hardness: 0.2, melting: 0, boiling: 100, temperature: -8, tags: ['snow', 'cold', 'water'], behavior: 'Sypki śnieg; topi się i zamarza w lód.', color: '#e8f8ff', pattern: 'crystal' }),
+  ice: P({ density: 917, hardness: 2, melting: 0, boiling: 100, temperature: -12, tags: ['ice', 'cold', 'water', 'brittle'], behavior: 'Lód; śliski, pęka i topi się powyżej zera.', color: '#bfeaff', pattern: 'crystal' }),
+  frost: P({ state: 'powder', movement: 'static', density: 200, hardness: 0.5, melting: 0, temperature: -15, tags: ['frost', 'cold', 'water'], behavior: 'Delikatne kryształy lodu; osadza się na powierzchniach.', color: '#dff5ff', pattern: 'crystal' }),
+  precip: P({ density: 900, hardness: 1, melting: 0, temperature: -5, tags: ['ice', 'precipitation', 'cold'], behavior: 'Opad lodowy; spada i topi się.', color: '#d0ecff', pattern: 'crystal' }),
+  space: P({ density: 900, hardness: 2, melting: 0, temperature: -80, tags: ['ice', 'space', 'cold'], behavior: 'Lód pozaziemski; zawiera sole i związki organiczne.', color: '#c8e8f8', pattern: 'crystal' })
+}

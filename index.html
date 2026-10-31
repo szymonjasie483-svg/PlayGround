@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#070a0c">
+  <meta name="description" content="SANDLAB — mobilny symulator fizyki i chemii z biblioteką 1050 materiałów.">
+  <title>SANDLAB — symulator fizyki i chemii</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-earth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M4 14h16M12 3.5c2.5 2.4 3.6 5.2 3.6 8.5S14.5 18.1 12 20.5C9.5 18.1 8.4 15.3 8.4 12S9.5 5.9 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-sand" viewBox="0 0 24 24"><path d="M3 19h18L14.5 6h-5L3 19Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.4 13h7.2M6.6 16h10.8" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="9" r=".9" fill="currentColor"/><circle cx="14" cy="9.5" r=".9" fill="currentColor"/></symbol>
+    <symbol id="i-metal" viewBox="0 0 24 24"><path d="m4 8 7-4 9 3-7 4-9-3Zm0 0v8l9 3 7-4V7M4 16l9 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gas" viewBox="0 0 24 24"><path d="M7 17.5h9.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.1A3.5 3.5 0 0 0 7 17.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 20h7M10.5 22h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-liquid" viewBox="0 0 24 24"><path d="M12 3.5S6.5 10 6.5 14.2A5.5 5.5 0 0 0 17.5 14.2C17.5 10 12 3.5 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 15.2a3.1 3.1 0 0 0 3 2.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chem" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9.5A2.5 2.5 0 0 0 7.2 22h9.6a2.5 2.5 0 0 0 2.2-3.5L14 9V3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.4 16h9.2" stroke="currentColor" stroke-width="1.3"/><circle cx="11" cy="18.2" r=".8" fill="currentColor"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M13.2 2.8c.5 3.2-1.4 4.7-2.6 6.2-1 1.3-1.6 2.3-1.3 3.8.6-1.6 1.7-2.4 2.7-3.3-.2 2.3 1.3 3.2 2.2 4.7 1 1.6.6 3.6-.8 4.8 3.8-.8 6.2-3.8 5.5-7.5-.7-3.7-3.6-5.9-5.7-8.7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.4 15.8c-2.3 2.4-1.8 5.2.5 6.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13.5 2-8 11h6L10.5 22l8-12h-6L13.5 2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20.5 3.5C11 3.5 5 7.2 5 13.3c0 3.6 2.7 6.2 6.2 6.2 6 0 9.3-6.4 9.3-16Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 21c2-5 5-8 10-10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-fungus" viewBox="0 0 24 24"><path d="M4 11.5C4 7.8 7.6 5 12 5s8 2.8 8 6.5c0 1.2-1 2-2.2 2H6.2c-1.2 0-2.2-.8-2.2-2Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5v4.2c0 1.3 1 2.3 2.5 2.3s2.5-1 2.5-2.3v-4.2M7 9.2h.1M12 7.5h.1M17 9.2h.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="16.2" rx="5.4" ry="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5.6" cy="10.2" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="9.4" cy="6.2" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="6.2" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="18.4" cy="10.2" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-food" viewBox="0 0 24 24"><path d="M12 7.2c1-2.7 3.3-4 6-3.8-.1 2.9-1.9 5-4.6 5.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 8c-4.1-1.4-7.5 1.4-7.5 5.4 0 4.1 3.4 7.1 7.5 7.1s7.5-3 7.5-7.1C19.5 9.4 16.1 6.6 12 8Z" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-brick" viewBox="0 0 24 24"><path d="M3 6h18v12H3V6Zm0 4h18M3 14h18M8 6v4m8 0v4M8 14v4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-wood" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5.2" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-plastic" viewBox="0 0 24 24"><path d="m12 2.8 7.6 4.4v8.8L12 20.4l-7.6-4.4V7.2L12 2.8Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.3 12.2 12 8.5l3.7 3.7-3.7 3.7-3.7-3.7Z" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M6.5 3h11l-1 6.3a4.5 4.5 0 0 1-9 0L6.5 3Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 13.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2.5v19M3.8 7.2l16.4 9.6M20.2 7.2 3.8 16.8M8.2 4.2 12 8l3.8-3.8M8.2 19.8 12 16l3.8 3.8M3.8 11.2l4.4.1M15.8 12.7l4.4.1M3.8 12.8l4.4-.1M15.8 11.3l4.4-.1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-space" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="10" ry="3.7" transform="rotate(-20 12 12)" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="9.5" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-radiation" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 2.5a9.5 9.5 0 0 1 5.2 1.6L13.5 10A3.5 3.5 0 0 0 12 9.8V2.5ZM21.5 16.3a9.5 9.5 0 0 1-5.2 4.7l-3.4-5.4a3.5 3.5 0 0 0 1.6-2.7l7-.1ZM2.5 16.3a9.5 9.5 0 0 0 5.2 4.7l3.4-5.4a3.5 3.5 0 0 1-1.6-2.7l-7-.1Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 2.5c.6 5.1 2.4 6.9 7.5 7.5-5.1.6-6.9 2.4-7.5 7.5-.6-5.1-2.4-6.9-7.5-7.5 5.1-.6 6.9-2.4 7.5-7.5ZM19 16.5c.2 1.8.9 2.5 2.7 2.7-1.8.2-2.5.9-2.7 2.7-.2-1.8-.9-2.5-2.7-2.7 1.8-.2 2.5-.9 2.7-2.7Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-hex" viewBox="0 0 24 24"><path d="m12 2.5 8.2 4.7v9.6L12 21.5l-8.2-4.7V7.2L12 2.5Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12 7.2 4.1 2.4v4.8L12 16.8l-4.1-2.4V9.6L12 7.2Z" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 20V9l5 3V9l5 3V6h8v14H3Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 17h2m3 0h2m3 0h2M16 3v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-ornament" viewBox="0 0 24 24"><path d="m12 2.8 4.5 6.1L21 12l-4.5 3.1L12 21.2l-4.5-6.1L3 12l4.5-3.1L12 2.8Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m12 7.2 2.2 3.1L16.5 12l-2.3 1.7L12 16.8l-2.2-3.1L7.5 12l2.3-1.7L12 7.2Z" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.5 6.5a4.8 4.8 0 0 1-6.2 6.2L4.5 16.5a2.1 2.1 0 1 0 3 3l3.8-3.8a4.8 4.8 0 0 0 6.2-6.2l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5 19 12 8 18.5v-13Z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7V5Zm6.5 0H17v14h-3.5V5Z" fill="currentColor"/></symbol>
+    <symbol id="i-step" viewBox="0 0 24 24"><path d="M6 5.5 15 12 6 18.5v-13Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M18 5v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7m-8 0 1 13h8l1-13M10 10.5v6m4-6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 1 1 4 0v9.5a4 4 0 1 1-4 0Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 9v7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-draw" viewBox="0 0 24 24"><path d="m15.5 4.5 4 4L8 20H4v-4L15.5 4.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m13 7 4 4" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m4.5 14.5 9-9 5 5-9 9h-5v-5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m10 9 5 5M4.5 19.5h15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-heat" viewBox="0 0 24 24"><path d="M12 3v10m0 0 4-4m-4 4-4-4M5 18h14M7 21h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cool" viewBox="0 0 24 24"><path d="M12 21V11m0 0 4 4m-4-4-4 4M5 6h14M7 3h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M4 7h3c5 0 5 10 10 10h3m-3-3 3 3-3 3M4 17h3c2.2 0 3.6-1.9 5-4.3C13.4 10.2 14.8 7 17 7h3m-3-3 3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5V17M12 7.2v.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v5.2l-4.7 9A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.2-3.8l-4.7-9V3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 16.5h9" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="14" y="4" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="4" y="14" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="14" y="14" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  </svg>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span class="brand-pixel p1"></span><span class="brand-pixel p2"></span><span class="brand-pixel p3"></span><span class="brand-pixel p4"></span>
+        </div>
+        <div class="brand-copy">
+          <div class="brand-line"><strong>SAND<span>LAB</span></strong><span class="version-pill">1000+</span></div>
+          <small>symulator fizyki i chemii</small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="top-stat"><span>Materiały</span><b id="topCount">—</b></div>
+        <div class="top-stat hide-mobile"><span>Kategorie</span><b>25</b></div>
+        <div class="top-stat hide-mobile clickable" id="reactionStat" title="Otwórz dziennik reakcji"><span>Reakcje</span><b id="reactionCount">0</b></div>
+        <button class="icon-btn" id="logBtn" aria-label="Dziennik reakcji" title="Dziennik reakcji"><svg><use href="#i-flask"/></svg></button>
+        <button class="icon-btn help-btn" id="helpBtn" aria-label="Jak grać"><svg><use href="#i-info"/></svg></button>
+      </div>
+    </header>
+
+    <main class="workspace" id="workspace">
+      <section class="stage-card" id="stageCard" aria-label="Piaskownica">
+        <canvas id="world"></canvas>
+        <div class="stage-vignette" aria-hidden="true"></div>
+        <div class="stage-top">
+          <div class="status-pill" id="statusPill"><span class="status-dot"></span><span id="simStatus">Symulacja aktywna</span><span class="fps" id="fps">60 FPS</span></div>
+          <div class="stage-top-right">
+            <button class="chip-btn" id="thermoBtn" title="Pokaż mapę temperatury"><svg><use href="#i-thermo"/></svg><span>Termowizja</span></button>
+            <div class="temp-chip"><span>Temperatura</span><b id="tempStat">20°C</b></div>
+          </div>
+        </div>
+
+        <div class="stage-label">
+          <span class="label-line"></span>
+          <span>PIASKOWNICA / ŚWIAT 01</span>
+        </div>
+
+        <div class="stage-bottom">
+          <button class="selected-chip" id="stageSelected" title="Pokaż szczegóły materiału">
+            <canvas id="stageIcon" width="40" height="40"></canvas>
+            <span class="selected-copy"><small>PĘDZEL</small><b id="stageMatName">Woda</b></span>
+            <svg class="chev"><use href="#i-chevron"/></svg>
+          </button>
+
+          <div class="tool-dock" role="toolbar" aria-label="Narzędzia">
+            <div class="dock-group">
+              <button class="dock-btn" id="playBtn" title="Pauza / odtwarzanie"><svg><use href="#i-pause"/></svg></button>
+              <button class="dock-btn" id="stepBtn" title="Jeden krok symulacji"><svg><use href="#i-step"/></svg></button>
+              <button class="dock-btn danger" id="clearBtn" title="Wyczyść świat"><svg><use href="#i-trash"/></svg></button>
+            </div>
+            <span class="dock-sep"></span>
+            <div class="dock-group" id="toolGroup">
+              <button class="dock-btn tool active" data-tool="draw" title="Rysuj"><svg><use href="#i-draw"/></svg></button>
+              <button class="dock-btn tool" data-tool="erase" title="Gumka"><svg><use href="#i-eraser"/></svg></button>
+              <button class="dock-btn tool" data-tool="heat" title="Podgrzej"><svg><use href="#i-heat"/></svg></button>
+              <button class="dock-btn tool" data-tool="cool" title="Ochłodź"><svg><use href="#i-cool"/></svg></button>
+            </div>
+          </div>
+
+          <label class="brush-control" title="Rozmiar pędzla">
+            <span>Pędzel</span>
+            <input id="brushRange" type="range" min="2" max="26" value="8" aria-label="Rozmiar pędzla">
+            <b id="brushValue">8</b>
+          </label>
+        </div>
+
+        <div class="stage-hint" id="stageHint">Wybierz materiał z biblioteki i rysuj palcem po planszy.</div>
+        <div class="reaction-toast" id="reactionToast" hidden></div>
+      </section>
+
+      <aside class="library" id="library" aria-label="Biblioteka materiałów">
+        <div class="sheet-grab" id="sheetGrab"><span></span></div>
+        <div class="library-head">
+          <div>
+            <span class="eyebrow">BIBLIOTEKA MATERIAŁÓW</span>
+            <h1>Odkrywaj materię.</h1>
+          </div>
+          <div class="library-actions">
+            <button class="ghost-btn" id="randomBtn"><svg><use href="#i-shuffle"/></svg><span>Losuj</span></button>
+            <button class="icon-btn sheet-toggle" id="sheetToggle" aria-label="Zwiń bibliotekę"><svg><use href="#i-chevron"/></svg></button>
+          </div>
+        </div>
+
+        <label class="search-box" for="searchInput">
+          <svg class="search-ico"><use href="#i-search"/></svg>
+          <input id="searchInput" type="search" placeholder="Szukaj w 1050 materiałach..." autocomplete="off" spellcheck="false">
+          <span class="search-kbd">⌘K</span>
+          <button class="search-clear" id="clearSearch" aria-label="Wyczyść wyszukiwanie" hidden><svg><use href="#i-close"/></svg></button>
+        </label>
+
+        <div class="filter-row">
+          <label class="select-wrap">
+            <span class="sr-only">Filtruj według stanu skupienia</span>
+            <select id="stateFilter">
+              <option value="all">Wszystkie stany</option>
+              <option value="solid">Ciało stałe</option>
+              <option value="powder">Proszek</option>
+              <option value="liquid">Ciecz</option>
+              <option value="gas">Gaz</option>
+              <option value="plasma">Plazma</option>
+              <option value="energy">Energia</option>
+              <option value="fire">Ogień</option>
+              <option value="plant">Roślina</option>
+              <option value="organism">Organizm</option>
+              <option value="gel">Żel</option>
+              <option value="foam">Piana</option>
+              <option value="paste">Pasta</option>
+            </select>
+            <svg class="select-chev"><use href="#i-chevron"/></svg>
+          </label>
+          <button class="filter-chip" id="favFilter"><svg><use href="#i-sparkle"/></svg><span>Ulubione</span><b id="favCount">0</b></button>
+          <button class="filter-chip" id="resetFilter" title="Wyczyść filtry"><svg><use href="#i-close"/></svg></button>
+        </div>
+
+        <div class="category-wrap">
+          <div class="category-strip" id="categoryStrip"></div>
+          <div class="category-fade" aria-hidden="true"></div>
+        </div>
+
+        <div class="results-bar">
+          <span id="resultsCount">Ładowanie…</span>
+          <span id="activeFilter">Wszystkie kategorie</span>
+        </div>
+
+        <div class="material-scroll" id="materialScroll">
+          <div class="material-grid" id="materialGrid"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <div class="empty-icon"><svg><use href="#i-search"/></svg></div>
+            <h3>Brak trafień</h3>
+            <p>Spróbuj innej nazwy, kategorii lub stanu skupienia.</p>
+            <button class="ghost-btn" id="emptyReset">Wyczyść filtry</button>
+          </div>
+          <button class="load-more" id="loadMore" hidden>Pokaż więcej materiałów</button>
+        </div>
+
+        <div class="library-foot" id="libraryFoot">
+          <div class="foot-empty" id="footEmpty">
+            <div class="foot-empty-icon"><svg><use href="#i-flask"/></svg></div>
+            <div><b>Wybierz materiał</b><span>Kliknij kartę, aby załadować jego fizykę i reakcje.</span></div>
+          </div>
+          <div class="foot-selected" id="footSelected" hidden>
+            <canvas id="footIcon" width="44" height="44"></canvas>
+            <div class="foot-copy">
+              <small id="footCategory">—</small>
+              <b id="footName">—</b>
+              <span id="footState">—</span>
+            </div>
+            <button class="foot-detail" id="footDetail">Szczegóły <span>↗</span></button>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="detailModal" hidden>
+    <article class="modal detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailName">
+      <button class="modal-close" id="detailClose" aria-label="Zamknij"><svg><use href="#i-close"/></svg></button>
+      <div class="detail-hero">
+        <canvas id="detailIcon" width="112" height="112"></canvas>
+        <div class="detail-title">
+          <span class="eyebrow" id="detailCategory">—</span>
+          <h2 id="detailName">—</h2>
+          <p id="detailBehavior">—</p>
+        </div>
+      </div>
+      <div class="detail-badges" id="detailBadges"></div>
+      <div class="detail-stats" id="detailStats"></div>
+      <div class="detail-reactions">
+        <div class="section-title"><h3>Fizyka, ciepło i reakcje</h3><span>automatyczny model</span></div>
+        <ul id="detailReactions"></ul>
+      </div>
+      <div class="detail-actions">
+        <button class="primary-btn" id="detailSelect">Wybierz i rysuj</button>
+        <button class="ghost-btn" id="detailClose2">Zamknij</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="modal-backdrop" id="helpModal" hidden>
+    <article class="modal help-modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <button class="modal-close" id="helpClose" aria-label="Zamknij"><svg><use href="#i-close"/></svg></button>
+      <span class="eyebrow">SZYBKI START</span>
+      <h2 id="helpTitle">Jedna plansza. 1050 materiałów.</h2>
+      <p class="help-lead">Rysuj, podgrzewaj i mieszaj substancje. Symulacja sama rozstrzyga, co się stanie.</p>
+      <div class="help-steps">
+        <div class="help-step"><span>01</span><div><b>Wybierz materiał</b><p>Szukaj po nazwie, filtruj kategorię lub stan skupienia. Każdy wpis ma własną teksturę i fizykę.</p></div></div>
+        <div class="help-step"><span>02</span><div><b>Rysuj po planszy</b><p>Palcem lub myszą. Zmień pędzel, użyj gumki, podgrzej albo ochłodź wybrany fragment.</p></div></div>
+        <div class="help-step"><span>03</span><div><b>Obserwuj reakcje</b><p>Ogień, woda, kwasy, metale, rośliny i promieniowanie reagują według właściwości materiałów.</p></div></div>
+      </div>
+      <div class="help-stats"><div><b>1050</b><span>materiałów</span></div><div><b>25</b><span>kategorii</span></div><div><b>0</b><span>pustych atrap</span></div></div>
+      <button class="primary-btn" id="helpStart">Zaczynam eksperyment</button>
+    </article>
+  </div>
+
+  <div class="modal-backdrop" id="logModal" hidden>
+    <article class="modal log-modal" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+      <button class="modal-close" id="logClose" aria-label="Zamknij"><svg><use href="#i-close"/></svg></button>
+      <span class="eyebrow">DZIENNIK EKSPERYMENTU</span>
+      <h2 id="logTitle">Odkryte reakcje</h2>
+      <div class="log-list" id="logList"></div>
+    </article>
+  </div>
+
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader-mark"><span></span><span></span><span></span><span></span></div>
+    <div class="loader-copy"><b>SANDLAB</b><span>kalibracja 1050 materiałów…</span></div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
