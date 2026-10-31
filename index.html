@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#0b0f13" />
+  <meta name="description" content="SAND:BOX — mobilny symulator 2D fizyki i chemii z biblioteką 1004 unikalnych materiałów." />
+  <title>SAND:BOX — symulator 2D fizyki i chemii</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0f13'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23ff9d3c'/%3E%3Crect x='17' y='7' width='8' height='8' rx='2' fill='%23ff9d3c' opacity='.55'/%3E%3Crect x='7' y='17' width='8' height='8' rx='2' fill='%23ff9d3c' opacity='.4'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23ff9d3c' opacity='.78'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="brand-copy">
+          <h1>SAND<span>:</span>BOX</h1>
+          <p>2D PHYSICS &amp; CHEMISTRY LAB</p>
+        </div>
+      </div>
+
+      <div class="top-stats" aria-label="Status symulacji">
+        <div class="top-stat live"><i></i><span>SYMULACJA</span><strong>AKTYWNA</strong></div>
+        <div class="top-stat"><span>MATERIAŁY</span><strong id="top-material-count">1 004</strong></div>
+        <div class="top-stat"><span>KATEGORIE</span><strong id="top-category-count">25</strong></div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn ghost scene-button" id="scene-menu-button" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9 7l3 5 2-3 6 9H4Z"/><circle cx="17" cy="5" r="2"/></svg>
+          <span>Scena: <b id="scene-button-label">Wulkan</b></span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg>
+        </button>
+        <button class="icon-btn mobile-only" id="mobile-library-button" aria-label="Otwórz bibliotekę materiałów">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z"/></svg>
+        </button>
+        <button class="icon-btn mobile-only" id="mobile-inspector-button" aria-label="Otwórz inspektor materiału">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.5v.2"/></svg>
+        </button>
+        <button class="icon-btn" id="help-button" aria-label="Pomoc i skróty">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 3.7 2.2c-.9.5-1.3 1-1.3 2M12 17v.2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel library" id="library" aria-label="Biblioteka materiałów">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">BIBLIOTEKA</span>
+            <h2>Materiały <span id="library-count">1 004</span></h2>
+          </div>
+          <button class="icon-btn sheet-close" id="library-close" aria-label="Zamknij bibliotekę">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <input id="search" type="search" placeholder="Szukaj materiału, np. woda, bazalt, złoto…" autocomplete="off" spellcheck="false" />
+          <button class="clear-search" id="clear-search" aria-label="Wyczyść wyszukiwanie" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+          </button>
+        </div>
+
+        <div class="category-strip" id="category-strip" aria-label="Filtruj według kategorii"></div>
+
+        <div class="library-meta">
+          <span id="filter-label">Wszystkie materiały</span>
+          <span id="visible-count">1 004</span>
+        </div>
+
+        <div class="material-list" id="material-list">
+          <div class="virtual-space" id="virtual-space">
+            <div class="material-grid" id="material-grid"></div>
+          </div>
+        </div>
+
+        <div class="library-foot">
+          <span class="lazy-dot"></span>
+          Ikony ładowane na żądanie · wszystkie materiały dostępne
+        </div>
+      </aside>
+
+      <section class="stage-wrap" aria-label="Obszar symulacji">
+        <div class="stage" id="stage" data-scene="volcano">
+          <div class="scene-sky" id="scene-sky" aria-hidden="true"></div>
+          <canvas id="sim-canvas" aria-label="Symulacja 2D piaskownicy"></canvas>
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="stage-vignette" aria-hidden="true"></div>
+
+          <div class="stage-hud hud-top">
+            <div class="hud-chip">
+              <span>EKSPERYMENT</span>
+              <strong id="experiment-name">Wulkan</strong>
+            </div>
+            <div class="hud-chip">
+              <span>CZĄSTKI</span>
+              <strong id="particle-count">0</strong>
+            </div>
+            <div class="hud-chip">
+              <span>TEMPERATURA</span>
+              <strong id="temp-readout">20°C</strong>
+            </div>
+            <div class="hud-chip hud-reactions">
+              <span>REAKCJE</span>
+              <strong id="reaction-readout">0</strong>
+            </div>
+          </div>
+
+          <div class="sim-controls" aria-label="Sterowanie symulacją">
+            <button class="sim-btn" id="pause-button" aria-label="Pauza" title="Pauza / odtwarzanie (Spacja)">
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg>
+            </button>
+            <button class="sim-btn" id="speed-button" aria-label="Prędkość symulacji" title="Prędkość symulacji">1×</button>
+            <button class="sim-btn" id="reset-button" aria-label="Odtwórz scenę" title="Odtwórz scenę (R)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 7M4 4v6h6"/></svg>
+            </button>
+            <button class="sim-btn" id="clear-button" aria-label="Wyczyść scenę" title="Wyczyść scenę">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg>
+            </button>
+            <button class="sim-btn" id="save-button" aria-label="Zapisz obraz PNG" title="Zapisz obraz PNG">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14M12 4v11M8 11l4 4 4-4"/></svg>
+            </button>
+          </div>
+
+          <div class="scene-badge" id="scene-badge">
+            <span>SCENA</span>
+            <strong>Wulkan</strong>
+          </div>
+
+          <div class="stage-hud hud-bottom">
+            <div class="tool-dock" id="tool-dock" aria-label="Narzędzia">
+              <button class="tool active" data-tool="brush" title="Pędzel (B)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5 5 5-8 8H6v-5l8-8Z"/><path d="M5 21c2 0 3-1 3-3"/></svg>
+                <span>Pędzel</span>
+              </button>
+              <button class="tool" data-tool="eraser" title="Gumka (E)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16 7-7 7 7-4 4H8l-4-4Z"/><path d="m11 9 4-4 6 6-4 4"/></svg>
+                <span>Gumka</span>
+              </button>
+              <button class="tool" data-tool="line" title="Linia (L)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/></svg>
+                <span>Linia</span>
+              </button>
+              <button class="tool" data-tool="heat" title="Ciepło (H)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2 4 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-5 0 3 1 4 2 4 1-2 0-5 1-8Z"/></svg>
+                <span>Ciepło</span>
+              </button>
+              <button class="tool" data-tool="cool" title="Zimno (C)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M4 7l16 10M20 7 4 17M8 4l4 3 4-3M8 20l4-3 4 3"/></svg>
+                <span>Zimno</span>
+              </button>
+              <button class="tool" data-tool="spark" title="Iskra (K)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 11h6l-1 9 9-13h-6l1-7Z"/></svg>
+                <span>Iskra</span>
+              </button>
+              <button class="tool" data-tool="vacuum" title="Odkurzacz (V)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10l-3 8H8L5 4Z"/><path d="M10 12v8M7 20h6"/></svg>
+                <span>Odkurzacz</span>
+              </button>
+            </div>
+            <div class="brush-control">
+              <span>ROZMIAR</span>
+              <input id="brush-size" type="range" min="1" max="16" value="4" step="1" aria-label="Rozmiar pędzla" />
+              <output id="brush-value" for="brush-size">4</output>
+            </div>
+          </div>
+
+          <div class="mobile-dock-hint" aria-hidden="true">DOTKNIJ I PRZESUŃ, ABY MALOWAĆ</div>
+        </div>
+      </section>
+
+      <aside class="panel inspector" id="inspector" aria-label="Inspektor materiału">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">INSPEKTOR</span>
+            <h2>Właściwości</h2>
+          </div>
+          <button class="icon-btn sheet-close" id="inspector-close" aria-label="Zamknij inspektor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+
+        <div class="selected-card">
+          <canvas id="selected-swatch" width="58" height="58"></canvas>
+          <div class="selected-copy">
+            <span class="selected-category" id="selected-category">Ziemia i minerały</span>
+            <h3 id="selected-name">Piasek kwarcowy</h3>
+            <div class="selected-badges">
+              <span class="state-pill" id="selected-state">Sypki</span>
+              <span class="id-pill" id="selected-id">#001</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="property-grid" id="property-grid"></div>
+
+        <div class="section-title">Ruch i zachowanie</div>
+        <p class="behavior" id="behavior-text"></p>
+
+        <div class="section-title">Temperatura i ciepło</div>
+        <div class="thermal-grid" id="thermal-grid"></div>
+
+        <div class="section-title">Możliwe reakcje</div>
+        <div class="reaction-list" id="reaction-list"></div>
+
+        <div class="section-title">Tagi materiału</div>
+        <div class="tag-list" id="tag-list"></div>
+
+        <div class="inspector-foot">
+          <span class="lazy-dot"></span>
+          <span id="inspector-foot-text">Gotowy do malowania</span>
+        </div>
+      </aside>
+    </main>
+
+    <div class="sheet-backdrop" id="sheet-backdrop"></div>
+
+    <div class="scene-menu" id="scene-menu" role="menu" aria-label="Wybierz scenę">
+      <div class="scene-menu-head"><span>SCENY STARTOWE</span><strong>Wybierz eksperyment</strong></div>
+      <button class="scene-option active" data-scene="volcano" role="menuitem">
+        <span class="scene-icon volcano"></span><span><b>Wulkan</b><small>Lawa, lód, woda i para</small></span>
+      </button>
+      <button class="scene-option" data-scene="garden" role="menuitem">
+        <span class="scene-icon garden"></span><span><b>Ogród</b><small>Rośliny, grzyby, organizmy</small></span>
+      </button>
+      <button class="scene-option" data-scene="lab" role="menuitem">
+        <span class="scene-icon lab"></span><span><b>Laboratorium</b><small>Kwasy, prąd, radioaktywność</small></span>
+      </button>
+      <button class="scene-option" data-scene="desert" role="menuitem">
+        <span class="scene-icon desert"></span><span><b>Pustynia</b><small>Piasek, skały, oaza</small></span>
+      </button>
+      <button class="scene-option" data-scene="space" role="menuitem">
+        <span class="scene-icon space"></span><span><b>Kosmos</b><small>Regolit, lód, plazma</small></span>
+      </button>
+    </div>
+
+    <div class="modal-backdrop" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title" hidden>
+      <div class="modal-card">
+        <div class="modal-head">
+          <div><span class="eyebrow">INSTRUKCJA</span><h2 id="help-title">Jak eksperymentować</h2></div>
+          <button class="icon-btn" id="help-close" aria-label="Zamknij pomoc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="help-grid">
+          <div><span class="help-num">01</span><h3>Wybierz materiał</h3><p>Przeszukaj bibliotekę 1004 materiałów, filtruj po 25 kategoriach i kliknij kartę. Ikony generowane są leniwie, więc biblioteka pozostaje szybka.</p></div>
+          <div><span class="help-num">02</span><h3>Maluj i reaguj</h3><p>Przeciągnij palcem lub myszą po planszy. Ciepło, zimno, iskra i odkurzacz zmieniają stan materii. Reakcje zależą od sąsiedztwa, temperatury i tagów.</p></div>
+          <div><span class="help-num">03</span><h3>Czytaj inspektor</h3><p>Każdy materiał ma własną gęstość, twardość, przewodność, palność, temperaturę topnienia i wrzenia oraz trzy możliwe reakcje.</p></div>
+          <div><span class="help-num">04</span><h3>Zmieniaj scenę</h3><p>Wulkan, ogród, laboratorium, pustynia i kosmos to gotowe eksperymenty. Użyj resetu, aby odtworzyć scenę, albo wyczyść planszę i zbuduj własną.</p></div>
+        </div>
+        <div class="shortcuts">
+          <span><kbd>B</kbd> pędzel</span><span><kbd>E</kbd> gumka</span><span><kbd>L</kbd> linia</span><span><kbd>H</kbd> ciepło</span><span><kbd>C</kbd> zimno</span><span><kbd>K</kbd> iskra</span><span><kbd>V</kbd> odkurzacz</span><span><kbd>Spacja</kbd> pauza</span><span><kbd>R</kbd> reset</span>
+        </div>
+        <div class="modal-note"><b>1004 materiały</b> · 25 kategorii · 0 atrap · wszystkie reakcje i właściwości są częścią symulacji.</div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+export const CATALOG_A = [
+  {
+    id: 'earth', name: 'Ziemia i minerały', short: 'Ziemia', icon: 'earth',
+    hue: [18, 46], sat: [22, 58], light: [26, 55], patterns: ['speckle', 'strata', 'grain', 'facets'],
+    groups: [
+      ['soil', ['Ziemia ogrodowa', 'Ziemia gliniasta', 'Ziemia piaszczysta', 'Ziemia próchniczna', 'Ziemia czerwona', 'Ziemia wulkaniczna', 'Ziemia bagienna', 'Ziemia lessowa']],
+      ['mineral', ['Kwarc', 'Skaleń', 'Mika', 'Kalcyt', 'Dolomit', 'Gips', 'Halit', 'Fluoryt', 'Hematyt', 'Magnetyt']],
+      ['ore', ['Boksyt', 'Ruda miedzi', 'Ruda żelaza', 'Ruda ołowiu', 'Ruda cynku', 'Ruda srebra', 'Ruda złota', 'Ruda uranu']],
+      ['gem', ['Rubin', 'Szafir', 'Szmaragd', 'Diament', 'Ametyst', 'Topaz', 'Opal', 'Turmalin']],
+      ['clay', ['Kaolin', 'Bentonit', 'Glina ceramiczna', 'Glina ogniotrwała', 'Ił', 'Muł']],
+    ],
+  },
+  {
+    id: 'sand', name: 'Piasek i skały', short: 'Piasek', icon: 'sand',
+    hue: [26, 52], sat: [8, 42], light: [35, 68], patterns: ['grain', 'dots', 'speckle', 'facets', 'strata'],
+    groups: [
+      ['sand', ['Piasek kwarcowy', 'Piasek pustynny', 'Piasek plażowy', 'Piasek rzeczny', 'Piasek bazaltowy', 'Piasek koralowy', 'Piasek zielony', 'Piasek magnetyczny']],
+      ['rock', ['Granit', 'Bazalt', 'Wapień', 'Piaskowiec', 'Łupek', 'Gabro', 'Ryjolit', 'Tuf', 'Brekcja', 'Marmur', 'Kwarcyt', 'Gnejs']],
+      ['volcanic', ['Obsydian', 'Pumeks', 'Skała wulkaniczna', 'Tuf wulkaniczny', 'Bomba wulkaniczna', 'Lawa bazaltowa']],
+      ['sedimentary', ['Kreda', 'Margiel', 'Szarogłaz', 'Zlepieniec', 'Skała osadowa', 'Skała metamorficzna']],
+      ['gravel', ['Żwir', 'Gruz', 'Otoczaki', 'Kamyki', 'Tłuczeń', 'Piarg', 'Kamień polny', 'Grys']],
+    ],
+  },
+  {
+    id: 'metals', name: 'Metale i stopy', short: 'Metale', icon: 'metal',
+    hue: [24, 220], sat: [5, 55], light: [42, 78], patterns: ['brushed', 'facets', 'dots', 'strata'],
+    groups: [
+      ['metal', ['Żelazo', 'Miedź', 'Aluminium', 'Cynk', 'Ołów', 'Cyna', 'Nikiel', 'Chrom', 'Tytan', 'Wolfram', 'Srebro', 'Złoto']],
+      ['rare_metal', ['Platyna', 'Pallad', 'Rod', 'Iryd', 'Osm', 'Ruten']],
+      ['alloy', ['Stal', 'Stal nierdzewna', 'Stal damasceńska', 'Brąz', 'Mosiądz', 'Żeliwo', 'Duraluminium', 'Inwar', 'Monel', 'Konstantan', 'Nitinol', 'Stellit']],
+      ['alkali', ['Sód', 'Potas', 'Lit', 'Cez']],
+      ['special_metal', ['Rtęć', 'Gal', 'Bizmut', 'Antymon', 'Arsen', 'Kobalt']],
+    ],
+  },
+  {
+    id: 'gases', name: 'Gazy', short: 'Gazy', icon: 'gas',
+    hue: [174, 278], sat: [10, 62], light: [56, 84], patterns: ['cloud', 'dots', 'ripple', 'bubbles'],
+    groups: [
+      ['gas', ['Powietrze', 'Tlen', 'Azot', 'Argon', 'Neon', 'Krypton', 'Ksenon', 'Hel']],
+      ['reactive_gas', ['Wodór', 'Chlor', 'Fluor', 'Ozon', 'Tlenek azotu', 'Dwutlenek siarki', 'Amoniak', 'Siarkowodór']],
+      ['greenhouse', ['Dwutlenek węgla', 'Metan', 'Podtlenek azotu', 'Para wodna', 'Halon', 'Freon']],
+      ['noble_gas', ['Radon', 'Deuter', 'Tryt', 'Hel-3']],
+      ['fuel_gas', ['Acetylen', 'Propan', 'Butan', 'Etan', 'Etylen', 'Tlenek węgla', 'Gaz świetlny', 'Gaz ziemny']],
+      ['vapor', ['Opary rtęci', 'Opary benzyny', 'Opary alkoholu', 'Mgła kwasowa', 'Dym', 'Para siarkowa']],
+    ],
+  },
+  {
+    id: 'liquids', name: 'Ciecze', short: 'Ciecze', icon: 'liquid',
+    hue: [166, 312], sat: [24, 78], light: [35, 70], patterns: ['ripple', 'bubbles', 'gloss', 'cloud'],
+    groups: [
+      ['water', ['Woda', 'Woda słona', 'Woda destylowana', 'Woda mineralna', 'Woda morska', 'Woda ciężka', 'Woda utleniona', 'Woda królewska']],
+      ['organic_liquid', ['Etanol', 'Metanol', 'Aceton', 'Benzen', 'Toluen', 'Gliceryna', 'Olej rzepakowy', 'Olej silnikowy']],
+      ['acid', ['Kwas siarkowy', 'Kwas solny', 'Kwas azotowy', 'Kwas octowy', 'Kwas fosforowy', 'Kwas cytrynowy']],
+      ['base', ['Wodorotlenek sodu', 'Wodorotlenek potasu', 'Amoniak ciekły', 'Mleko wapienne']],
+      ['cryo_liquid', ['Ciekły azot', 'Ciekły tlen', 'Ciekły hel', 'Ciekły wodór', 'Ciekły metan', 'Ciekły propan']],
+      ['fuel_liquid', ['Benzyna', 'Nafta', 'Diesel', 'Rozpuszczalnik nitro', 'Terpentyna', 'Glikol', 'Płyn hamulcowy', 'Olej hydrauliczny']],
+    ],
+  },
+  {
+    id: 'chemistry', name: 'Chemia', short: 'Chemia', icon: 'flask',
+    hue: [22, 330], sat: [38, 88], light: [38, 72], patterns: ['crystal', 'bubbles', 'dots', 'speckle'],
+    groups: [
+      ['salt', ['Chlorek sodu', 'Chlorek potasu', 'Siarczan miedzi', 'Azotan srebra', 'Węglan wapnia', 'Wodorowęglan sodu', 'Siarczek żelaza', 'Nadmanganian potasu']],
+      ['oxide', ['Tlenek żelaza', 'Tlenek miedzi', 'Tlenek cynku', 'Tlenek tytanu', 'Tlenek glinu', 'Tlenek ołowiu', 'Tlenek chromu', 'Tlenek wapnia']],
+      ['organic_chem', ['Glukoza', 'Sacharoza', 'Skrobia', 'Celuloza', 'Kwas benzoesowy', 'Fenol', 'Formaldehyd', 'Urea']],
+      ['reagent', ['Kwas borowy', 'Kwas szczawiowy', 'Siarczyn sodu', 'Chlorek amonu', 'Azotan amonu', 'Siarczan magnezu', 'Węglik wapnia', 'Żelazocyjanek potasu']],
+      ['element', ['Siarka', 'Fosfor', 'Jod', 'Brom', 'Węgiel drzewny', 'Grafit', 'Sadza', 'Bor']],
+    ],
+  },
+  {
+    id: 'fire', name: 'Ogień i temperatura', short: 'Ogień', icon: 'flame',
+    hue: [2, 52], sat: [72, 100], light: [42, 72], patterns: ['flame', 'cloud', 'spark', 'ripple'],
+    groups: [
+      ['flame', ['Ogień', 'Płomień świecy', 'Płomień alkoholowy', 'Płomień gazowy', 'Płomień magnezowy', 'Płomień sodu', 'Płomień miedzi', 'Płomień zimny']],
+      ['molten', ['Lawa', 'Magma', 'Metal stopiony']],
+      ['heat_solid', ['Iskra', 'Żar', 'Węgiel żarzący', 'Popiół gorący', 'Żużel']],
+      ['cold_solid', ['Lód kriogeniczny', 'Sól lodowa', 'Mroźny pył', 'Zamieć', 'Kondensat', 'Szron', 'Grad', 'Kriohydrat']],
+      ['hot_vapor', ['Para', 'Para przegrzana', 'Smuga dymu']],
+      ['plasma', ['Płomień plazmowy', 'Kula ognia', 'Żarzenie', 'Iskra żarowa', 'Popiół lotny']],
+      ['explosive', ['Proch czarny', 'Dynamit', 'Trotyl', 'Nitrogliceryna', 'Termit metaliczny', 'Fajerwerk', 'Petarda', 'Mieszanka wybuchowa']],
+    ],
+  },
+  {
+    id: 'electricity', name: 'Elektryczność', short: 'Prąd', icon: 'bolt',
+    hue: [188, 262], sat: [62, 100], light: [45, 76], patterns: ['bolt', 'circuit', 'gloss', 'spark'],
+    groups: [
+      ['conductor', ['Przewód miedziany', 'Przewód aluminiowy', 'Przewód wysokiego napięcia', 'Szyna miedziana', 'Stop oporowy', 'Grafit przewodzący', 'Elektrolit', 'Plazma przewodząca']],
+      ['component', ['Bateria', 'Kondensator', 'Cewka', 'Rezystor', 'Tranzystor', 'Dioda', 'Bezpiecznik', 'Przekaźnik']],
+      ['electric', ['Łuk elektryczny', 'Wyładowanie', 'Iskra elektryczna', 'Piorun', 'Elektryczność statyczna', 'Pole elektryczne', 'Jonizacja', 'Burza plazmowa']],
+      ['source', ['Generator', 'Ogniwo słoneczne', 'Turbina', 'Alternator', 'Dynama', 'Transformator', 'Inwerter', 'Ładowarka']],
+      ['electric_material', ['Kabel koncentryczny', 'Taśma izolacyjna', 'Ferryt', 'Nadprzewodnik', 'Piezoelektryk', 'Elektret', 'Termopara', 'Superkondensator']],
+    ],
+  },
+  {
+    id: 'plants', name: 'Rośliny', short: 'Rośliny', icon: 'leaf',
+    hue: [72, 158], sat: [38, 82], light: [28, 60], patterns: ['veins', 'grain', 'dots', 'ripple'],
+    groups: [
+      ['tree', ['Dąb', 'Sosna', 'Brzoza', 'Buk', 'Klon', 'Wierzba', 'Sekwoja', 'Baobab']],
+      ['leaf', ['Liść dębu', 'Liść sosny', 'Liść brzozy', 'Liść klonu', 'Mech', 'Paproć', 'Trawa', 'Bambus']],
+      ['flower', ['Róża', 'Tulipan', 'Słonecznik', 'Lawenda', 'Orchidea', 'Lilia wodna', 'Mak', 'Chaber']],
+      ['crop', ['Pszenica', 'Kukurydza', 'Ryż', 'Ziemniak', 'Pomidor', 'Marchew', 'Soja', 'Bawełna']],
+      ['aquatic_plant', ['Wodorost', 'Alga morska', 'Rzęsa wodna', 'Lotos', 'Morszczyn', 'Plankton roślinny', 'Trawa morska', 'Sinica']],
+    ],
+  },
+];
